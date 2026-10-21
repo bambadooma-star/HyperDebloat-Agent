@@ -1,0 +1,68 @@
+name: Validate Registry & Lint Scripts
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate packages.json syntax and structure
+        run: |
+          python3 -c "
+          import json, sys
+          
+          with open('data/packages.json', 'r', encoding='utf-8') as f:
+              data = json.load(f)
+          
+          required_keys = {'package', 'name', 'target_os', 'tier', 'category', 'uninstall_cmd', 'restore_cmd', 'impact_summary', 'dependencies'}
+          valid_tiers = {'SAFE', 'CAUTION', 'CRITICAL'}
+          valid_cats = {'telemetry', 'adware', 'bloatware', 'cloud_sync', 'core_framework'}
+          
+          packages = data.get('packages', [])
+          if not packages:
+              print('Error: packages array is empty!')
+              sys.exit(1)
+          
+          seen = set()
+          for p in packages:
+              pkg_id = p.get('package')
+              if not pkg_id:
+                  print('Error: Missing package ID')
+                  sys.exit(1)
+              if pkg_id in seen:
+                  print(f'Error: Duplicate package ID {pkg_id}')
+                  sys.exit(1)
+              seen.add(pkg_id)
+              
+              diff = required_keys - set(p.keys())
+              if diff:
+                  print(f'Error in {pkg_id}: missing keys {diff}')
+                  sys.exit(1)
+                  
+              if p['tier'] not in valid_tiers:
+                  print(f'Error in {pkg_id}: invalid tier {p[\"tier\"]}')
+                  sys.exit(1)
+                  
+              if p['category'] not in valid_cats:
+                  print(f'Error in {pkg_id}: invalid category {p[\"category\"]}')
+                  sys.exit(1)
+          
+          print(f'Successfully validated {len(packages)} packages in registry!')
+          "
+
+      - name: ShellCheck linting
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './scripts'

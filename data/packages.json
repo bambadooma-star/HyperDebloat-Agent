@@ -1,0 +1,580 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "last_updated": "2026-10-21",
+  "metadata": {
+    "framework": "HyperDebloat-Agent",
+    "description": "Deterministic ADB debloating and telemetry registry for Xiaomi HyperOS, MIUI, and standard Android core systems (Non-Root).",
+    "maintainer": "HyperDebloat Core Architecture Team",
+    "license": "MIT"
+  },
+  "packages": [
+    {
+      "package": "com.miui.analytics",
+      "name": "MIUI Analytics Daemon",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.analytics",
+      "restore_cmd": "cmd package install-existing com.miui.analytics",
+      "impact_summary": "Stops continuous background telemetry and user activity reporting to Xiaomi tracking servers. Reduces battery drain and network traffic.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.msa.global",
+      "name": "MIUI System Ads (MSA Global)",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.msa.global",
+      "restore_cmd": "cmd package install-existing com.miui.msa.global",
+      "impact_summary": "Disables the central push advertising engine embedded within HyperOS/MIUI system applications (e.g. Themes, Downloads, Folder recommendations).",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.joyose",
+      "name": "Xiaomi Joyose Game / Telemetry Daemon",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.joyose",
+      "restore_cmd": "cmd package install-existing com.xiaomi.joyose",
+      "impact_summary": "Eliminates aggressive thermal and benchmark throttling profiles, background metrics collection, and periodic ad-sync handshakes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.hybrid",
+      "name": "MIUI Quick Apps / Hybrid App Runtime",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.hybrid",
+      "restore_cmd": "cmd package install-existing com.miui.hybrid",
+      "impact_summary": "Prevents unauthorized background execution of mini-apps, promotional web wrappers, and tracking notifications.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.hybrid.accessory",
+      "name": "MIUI Quick Apps Accessory Engine",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.hybrid.accessory",
+      "restore_cmd": "cmd package install-existing com.miui.hybrid.accessory",
+      "impact_summary": "Stops secondary background polling and support libraries for Quick Apps runtime.",
+      "dependencies": [
+        "com.miui.hybrid"
+      ]
+    },
+    {
+      "package": "com.miui.bugreport",
+      "name": "MIUI Bug Report & Log Uploader",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.bugreport",
+      "restore_cmd": "cmd package install-existing com.miui.bugreport",
+      "impact_summary": "Halts silent dump collections, log compression, and crash transmission to remote diagnostic endpoints.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.miservice",
+      "name": "Mi Services & User Feedback",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.miservice",
+      "restore_cmd": "cmd package install-existing com.miui.miservice",
+      "impact_summary": "Disables diagnostic survey prompts and background feedback transmission.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.feedback",
+      "name": "Google Play Feedback Reporter",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.feedback",
+      "restore_cmd": "cmd package install-existing com.google.android.feedback",
+      "impact_summary": "Prevents automated transmission of crash logs and device metrics to Google servers.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.yellowpage",
+      "name": "MIUI Yellow Page & Caller ID Engine",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.yellowpage",
+      "restore_cmd": "cmd package install-existing com.miui.yellowpage",
+      "impact_summary": "Eliminates commercial directory lookups, caller identification telemetry, and targeted marketing banners in dialer.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.mipicks",
+      "name": "GetApps (Xiaomi App Store)",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.mipicks",
+      "restore_cmd": "cmd package install-existing com.xiaomi.mipicks",
+      "impact_summary": "Removes duplicate proprietary app store, non-stop update nag notifications, and promotional app pushes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.glgm",
+      "name": "Xiaomi Game Center",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.glgm",
+      "restore_cmd": "cmd package install-existing com.xiaomi.glgm",
+      "impact_summary": "Eliminates game promotion hub, lockscreen game banners, and in-game ad overlays.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.videoplayer",
+      "name": "Mi Video Player",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.videoplayer",
+      "restore_cmd": "cmd package install-existing com.miui.videoplayer",
+      "impact_summary": "Replaces adware-ridden media player with clean open-source alternatives like VLC or Just Video Player.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.player",
+      "name": "Mi Music Player",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.player",
+      "restore_cmd": "cmd package install-existing com.miui.player",
+      "impact_summary": "Removes integrated music streaming service with persistent promotional pushes and audio ad injections.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.midrop",
+      "name": "ShareMe (Mi Drop)",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.midrop",
+      "restore_cmd": "cmd package install-existing com.xiaomi.midrop",
+      "impact_summary": "Disables proprietary P2P file transfer tool known for sending push promotions; standard Quick Share / Nearby Share remains active.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.translation.kingsoft",
+      "name": "Kingsoft Translation Provider",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.translation.kingsoft",
+      "restore_cmd": "cmd package install-existing com.miui.translation.kingsoft",
+      "impact_summary": "Stops background tracking and queries routed through external third-party Kingsoft translation APIs.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.translation.xmtranslator",
+      "name": "Xiaomi Translator Service",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.translation.xmtranslator",
+      "restore_cmd": "cmd package install-existing com.miui.translation.xmtranslator",
+      "impact_summary": "Terminates unnecessary translation background daemon.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.compass",
+      "name": "MIUI Compass",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.compass",
+      "restore_cmd": "cmd package install-existing com.miui.compass",
+      "impact_summary": "Removes stock compass app bundled with analytics and location-sharing probes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.calculator",
+      "name": "MIUI Calculator",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.calculator",
+      "restore_cmd": "cmd package install-existing com.miui.calculator",
+      "impact_summary": "Replaces telemetry-equipped calculator with AOSP or Fossify Calculator.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.weather2",
+      "name": "MIUI Weather",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.weather2",
+      "restore_cmd": "cmd package install-existing com.miui.weather2",
+      "impact_summary": "Removes stock weather app notorious for feed ads and third-party data broker geolocation pings.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.payment",
+      "name": "Xiaomi Mi Pay Framework",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.payment",
+      "restore_cmd": "cmd package install-existing com.xiaomi.payment",
+      "impact_summary": "Disables unneeded proprietary Xiaomi payment daemon (Google Pay / Google Wallet operates independently and remains 100% functional).",
+      "dependencies": []
+    },
+    {
+      "package": "com.facebook.katana",
+      "name": "Facebook Client (Pre-installed)",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.facebook.katana",
+      "restore_cmd": "cmd package install-existing com.facebook.katana",
+      "impact_summary": "Removes OEM factory-installed Facebook stub app.",
+      "dependencies": []
+    },
+    {
+      "package": "com.facebook.system",
+      "name": "Facebook System Service",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.facebook.system",
+      "restore_cmd": "cmd package install-existing com.facebook.system",
+      "impact_summary": "Terminates privileged background service tracking device installation events for Meta advertising graph.",
+      "dependencies": []
+    },
+    {
+      "package": "com.facebook.appmanager",
+      "name": "Facebook App Manager",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.facebook.appmanager",
+      "restore_cmd": "cmd package install-existing com.facebook.appmanager",
+      "impact_summary": "Prevents silent sideloading and background updating of Meta components outside Google Play.",
+      "dependencies": []
+    },
+    {
+      "package": "com.facebook.services",
+      "name": "Facebook Core Services",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.facebook.services",
+      "restore_cmd": "cmd package install-existing com.facebook.services",
+      "impact_summary": "Eliminates continuous Facebook analytics beacons embedded at the system partition level.",
+      "dependencies": []
+    },
+    {
+      "package": "com.tencent.soter.soterserver",
+      "name": "Tencent Soter Biometric Daemon",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.tencent.soter.soterserver",
+      "restore_cmd": "cmd package install-existing com.tencent.soter.soterserver",
+      "impact_summary": "Removes biometric payment connector used exclusively for Chinese WeChat payment verification.",
+      "dependencies": []
+    },
+    {
+      "package": "com.bsp.catchlog",
+      "name": "Qualcomm BSP CatchLog Collector",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.bsp.catchlog",
+      "restore_cmd": "cmd package install-existing com.bsp.catchlog",
+      "impact_summary": "Disables chip-level modem and chipset event logging service, saving storage writes and CPU cycles.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.daemon",
+      "name": "MIUI System Daemon",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.daemon",
+      "restore_cmd": "cmd package install-existing com.miui.daemon",
+      "impact_summary": "Halts persistent background service responsible for device telemetry aggregation.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.micloudsync",
+      "name": "Mi Cloud Sync Push Provider",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.micloudsync",
+      "restore_cmd": "cmd package install-existing com.miui.micloudsync",
+      "impact_summary": "Stops background synchronization push requests to Xiaomi cloud servers.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.phrase",
+      "name": "Frequent Phrases Telemetry",
+      "target_os": "HyperOS",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.phrase",
+      "restore_cmd": "cmd package install-existing com.miui.phrase",
+      "impact_summary": "Removes stock clipboard snippet aggregator.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.cloudservice",
+      "name": "Xiaomi Cloud Core Framework",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.cloudservice",
+      "restore_cmd": "cmd package install-existing com.miui.cloudservice",
+      "impact_summary": "Disables all Xiaomi Cloud synchronization (Contacts, Notes, Find Device, SMS). Only remove if you do NOT rely on Xiaomi Cloud.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.cloudservice.sysbase",
+      "name": "Xiaomi Cloud System Base",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.cloudservice.sysbase",
+      "restore_cmd": "cmd package install-existing com.miui.cloudservice.sysbase",
+      "impact_summary": "Low-level system integration provider for Xiaomi account sync.",
+      "dependencies": [
+        "com.miui.cloudservice"
+      ]
+    },
+    {
+      "package": "com.miui.cloudbackup",
+      "name": "Xiaomi Cloud Backup Client",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.cloudbackup",
+      "restore_cmd": "cmd package install-existing com.miui.cloudbackup",
+      "impact_summary": "Stops automatic nightly cloud backups of app data and layout to Xiaomi servers.",
+      "dependencies": [
+        "com.miui.cloudservice"
+      ]
+    },
+    {
+      "package": "com.miui.gallery",
+      "name": "MIUI / HyperOS Stock Gallery",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.gallery",
+      "restore_cmd": "cmd package install-existing com.miui.gallery",
+      "impact_summary": "Stock gallery application with integrated cloud backup and face recognition. Removing requires a 3rd party gallery (e.g. Google Photos or Fossify Gallery) installed first.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.cleanmaster",
+      "name": "Tencent CleanMaster Security Module",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.cleanmaster",
+      "restore_cmd": "cmd package install-existing com.miui.cleanmaster",
+      "impact_summary": "Deactivates third-party Tencent CleanMaster definitions inside Security app. Note: Some HyperOS versions show a benign toast if deep cleaner is manually tapped.",
+      "dependencies": []
+    },
+    {
+      "package": "com.mi.globalbrowser",
+      "name": "Mi Browser / Mint Browser",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.mi.globalbrowser",
+      "restore_cmd": "cmd package install-existing com.mi.globalbrowser",
+      "impact_summary": "Removes heavy proprietary browser known for tracking queries and sending URLs to remote proxies. Ensure alternative browser (Firefox/Chrome/Brave) is installed first.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.screenrecorder",
+      "name": "MIUI Screen Recorder",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.screenrecorder",
+      "restore_cmd": "cmd package install-existing com.miui.screenrecorder",
+      "impact_summary": "System screen recording tool. Remove only if screen recording is not required or an alternative is preferred.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.notes",
+      "name": "MIUI Notes",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.notes",
+      "restore_cmd": "cmd package install-existing com.miui.notes",
+      "impact_summary": "Stock notes application. Caution: Any notes not backed up or synced will be inaccessible until restored.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.tachyon",
+      "name": "Google Meet",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.tachyon",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.tachyon",
+      "impact_summary": "Google video calling client. Safe to remove if not actively used.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.videos",
+      "name": "Google TV",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.videos",
+      "restore_cmd": "cmd package install-existing com.google.android.videos",
+      "impact_summary": "Google media store and video library client.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.youtube.music",
+      "name": "YouTube Music",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.youtube.music",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.youtube.music",
+      "impact_summary": "Preloaded YouTube Music client. Safe to remove if another music app or Spotify is preferred.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.chrome",
+      "name": "Google Chrome",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.android.chrome",
+      "restore_cmd": "cmd package install-existing com.android.chrome",
+      "impact_summary": "Google Chrome browser. Ensure another web browser (e.g. Firefox, Brave) is installed before uninstalling.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.voiceassist",
+      "name": "Xiao AI / Mi AI Voice Assistant",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.voiceassist",
+      "restore_cmd": "cmd package install-existing com.miui.voiceassist",
+      "impact_summary": "Proprietary Xiaomi assistant. Remove if Google Assistant or no assistant is preferred.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.securitycenter",
+      "name": "MIUI / HyperOS Security Center",
+      "target_os": "HyperOS",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Core HyperOS framework holding permission management, battery settings, network firewall, and thermal dispatchers. Removal causes fatal bootloop or system settings crashes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.incallui",
+      "name": "Android In-Call UI Framework",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. The active telephony display screen interface. Removal completely breaks incoming and outgoing voice calls.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.systemui",
+      "name": "Android System UI",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Manages status bar, navigation bar, quick settings panel, notification shade, and lockscreen. Removal causes immediate crash loops.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.home",
+      "name": "MIUI / HyperOS System Launcher",
+      "target_os": "HyperOS",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Default home screen and recent apps overview provider. Removal without an active alternative default launcher renders the device completely inaccessible.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.phone",
+      "name": "Phone Services & Telephony Base",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Cellular radio modem integration, SIM card registration, and emergency calling. Removal breaks all cellular functionality.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.gms",
+      "name": "Google Play Services",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Core Google platform runtime, Firebase Cloud Messaging (FCM push notifications), location APIs, and Play Integrity checks. Removal breaks almost all third-party banking, messaging, and Google apps.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.settings",
+      "name": "Android System Settings Provider",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. The core device settings application and preferences database. Removal leaves the device unconfigurable.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.packageinstaller",
+      "name": "Android Package Installer",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Core OS package installer and permission granting interface. Removal prevents installing or updating applications.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.providers.telephony",
+      "name": "Telephony and SMS Provider",
+      "target_os": "Universal",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. SMS/MMS message database and carrier APN settings provider. Removal breaks messaging and mobile data configurations.",
+      "dependencies": []
+    }
+  ]
+}
