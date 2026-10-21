@@ -223,7 +223,7 @@ while IFS='|' read -r pkg tier name cmd impact; do
     fi
 done <<< "${CANDIDATES_LIST}"
 
-ACTIVE_COUNT=$(echo -e "${ACTIVE_TARGETS}" | grep -v '^[[:space:]]*$' | wc -l | tr -d ' ')
+ACTIVE_COUNT=$(echo -e "${ACTIVE_TARGETS}" | grep -v -c '^[[:space:]]*$' | tr -d ' ')
 
 if [ "${ACTIVE_COUNT}" -eq 0 ]; then
     log_ok "All selected candidate packages are already uninstalled from user 0. Device is clean!"
@@ -277,6 +277,15 @@ while IFS='|' read -r pkg tier name cmd impact; do
         echo -e "    ${YELLOW}[SIMULATED]${NC} adb shell pm uninstall -k --user 0 ${pkg}"
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
         continue
+    fi
+
+    # Empirical 500mA Runaway Prevention for HyperOS / MIUI:
+    # Purge hidden /data/app updates and kill lingering binders before uninstalling base package
+    if [ "${pkg}" = "com.miui.msa.global" ] || [ "${pkg}" = "com.miui.analytics" ]; then
+        log_info "Applying loop-prevention: purging hidden updates and terminating binders for ${pkg}..."
+        adb shell pm uninstall "${pkg}" >/dev/null 2>&1 || true
+        adb shell am force-stop "${pkg}" >/dev/null 2>&1 || true
+        adb shell am force-stop com.miui.notes >/dev/null 2>&1 || true
     fi
 
     # Issue ADB command

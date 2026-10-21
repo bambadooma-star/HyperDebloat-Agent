@@ -40,7 +40,6 @@ log_step()  { echo -e "\n${BOLD}${BLUE}==>${NC} ${BOLD}$*${NC}" | tee -a "${REST
 RESTORE_SOURCE="LAST_REMOVED"
 CUSTOM_FILE=""
 SPECIFIC_PACKAGE=""
-ALL_SAFE=false
 
 show_usage() {
     cat << EOF
@@ -76,7 +75,6 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -a|--all-safe)
-            ALL_SAFE=true
             RESTORE_SOURCE="ALL_SAFE"
             shift
             ;;

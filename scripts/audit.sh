@@ -41,6 +41,7 @@ log_step()  { echo -e "\n${BOLD}${BLUE}==>${NC} ${BOLD}$*${NC}" | tee -a "${AUDI
 echo -e "${BOLD}${CYAN}======================================================${NC}"
 echo -e "${BOLD}${CYAN}   HyperDebloat-Agent :: Pre-Flight Audit & Snapshot  ${NC}"
 echo -e "${BOLD}${CYAN}======================================================${NC}"
+log_info "Initiating deterministic hardware and package inspection..."
 
 # ------------------------------------------------------------------------------
 # 1. ADB Binary Check
@@ -61,7 +62,7 @@ log_step "Validating device connection and authorization status..."
 DEVICES_OUTPUT="$(adb devices -l)"
 
 # Count active devices
-ATTACHED_COUNT="$(echo "${DEVICES_OUTPUT}" | sed '1d' | grep -v '^[[:space:]]*$' | wc -l | tr -d ' ')"
+ATTACHED_COUNT="$(echo "${DEVICES_OUTPUT}" | sed '1d' | grep -v -c '^[[:space:]]*$' | tr -d ' ')"
 
 if [ "${ATTACHED_COUNT}" -eq 0 ]; then
     log_err "No Android device detected over USB or Wireless ADB."
@@ -117,10 +118,11 @@ PROP_MIUI_INCR="$(get_device_prop "ro.build.version.incremental")"
 # Battery Level Verification
 BATTERY_LEVEL="$(adb shell dumpsys battery 2>/dev/null | grep -i "level:" | awk '{print $2}' | tr -d '\r' || echo "0")"
 
-echo -e "  - Manufacturer : ${BOLD}${PROP_MANUFACTURER}${NC}"
+echo -e "  - Manufacturer : ${BOLD}${PROP_MANUFACTURER}${NC} (${PROP_BRAND})"
 echo -e "  - Model        : ${BOLD}${PROP_MODEL}${NC} (${PROP_DEVICE})"
 echo -e "  - Android Ver  : ${BOLD}${PROP_ANDROID_VER}${NC} (API ${PROP_SDK})"
 echo -e "  - OS UI String : ${BOLD}${PROP_MIUI_VER:-AOSP / Standard}${NC} ${PROP_HYPEROS_FLAG:+(HyperOS: $PROP_HYPEROS_FLAG)}"
+echo -e "  - Incremental  : ${PROP_MIUI_INCR}"
 echo -e "  - Build ID     : ${PROP_BUILD_ID}"
 echo -e "  - Battery Lvl  : ${BOLD}${BATTERY_LEVEL}%${NC}"
 
@@ -242,7 +244,7 @@ echo -e "\n${BOLD}Identified Target Packages on Device:${NC}"
 echo "--------------------------------------------------------------------------------"
 printf "%-10s | %-32s | %-32s\n" "TIER" "PACKAGE ID" "NAME"
 echo "--------------------------------------------------------------------------------"
-echo "${AUDIT_SUMMARY}" | grep -E '^(SAFE|CAUTION|CRITICAL)\|' | while IFS='|' read -r tier pkg name cat; do
+echo "${AUDIT_SUMMARY}" | grep -E '^(SAFE|CAUTION|CRITICAL)\|' | while IFS='|' read -r tier pkg name _cat; do
     case "${tier}" in
         SAFE)
             printf "${GREEN}%-10s${NC} | %-32s | %-32s\n" "[SAFE]" "${pkg}" "${name}"

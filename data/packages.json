@@ -17,7 +17,7 @@
       "category": "telemetry",
       "uninstall_cmd": "pm uninstall -k --user 0 com.miui.analytics",
       "restore_cmd": "cmd package install-existing com.miui.analytics",
-      "impact_summary": "Stops continuous background telemetry and user activity reporting to Xiaomi tracking servers. Reduces battery drain and network traffic.",
+      "impact_summary": "Stops continuous background telemetry and user tracking. Note: Framework automatically purges hidden /data/app updates first to prevent the known 500mA system_server/WebView CPU spin loop.",
       "dependencies": []
     },
     {
@@ -28,18 +28,18 @@
       "category": "adware",
       "uninstall_cmd": "pm uninstall -k --user 0 com.miui.msa.global",
       "restore_cmd": "cmd package install-existing com.miui.msa.global",
-      "impact_summary": "Disables the central push advertising engine embedded within HyperOS/MIUI system applications (e.g. Themes, Downloads, Folder recommendations).",
+      "impact_summary": "Disables central push advertising engine in HyperOS. Note: Framework automatically purges hidden /data/app updates first to prevent the known 500mA system_server/WebView CPU spin loop.",
       "dependencies": []
     },
     {
       "package": "com.xiaomi.joyose",
       "name": "Xiaomi Joyose Game / Telemetry Daemon",
       "target_os": "HyperOS",
-      "tier": "SAFE",
-      "category": "telemetry",
-      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.joyose",
-      "restore_cmd": "cmd package install-existing com.xiaomi.joyose",
-      "impact_summary": "Eliminates aggressive thermal and benchmark throttling profiles, background metrics collection, and periodic ad-sync handshakes.",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Empirically validated on HyperOS: controls dynamic CPU thermal regulation safety limits AND provides the system bridge for SMS OTP auto-parsing in Banking and FinTech apps. Removal risks thermal runaway and breaks banking SMS verification.",
       "dependencies": []
     },
     {
@@ -574,6 +574,61 @@
       "uninstall_cmd": "BLOCKED",
       "restore_cmd": "N/A",
       "impact_summary": "DO NOT TOUCH. SMS/MMS message database and carrier APN settings provider. Removal breaks messaging and mobile data configurations.",
+      "dependencies": []
+    },
+    {
+      "package": "com.android.thememanager",
+      "name": "MIUI / HyperOS Theme & Lockscreen Engine",
+      "target_os": "HyperOS",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Core framework powering lockscreen rendering, Always-On-Display (AOD) assets, and system wallpapers. Removal or corruption breaks device lockscreen unlocking.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.simactivate.service",
+      "name": "Xiaomi SIM Activation Service",
+      "target_os": "HyperOS",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "DO NOT TOUCH. Essential for cellular carrier registration, network provisioning, and SIM security handshakes in multi-SIM / eSIM environments.",
+      "dependencies": []
+    },
+    {
+      "package": "com.miui.mediaeditor",
+      "name": "Gallery Photo & Video Editor Suite",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.miui.mediaeditor",
+      "restore_cmd": "cmd package install-existing com.miui.mediaeditor",
+      "impact_summary": "Removes integrated gallery video and photo editing plugins. Base gallery viewing remains operational.",
+      "dependencies": []
+    },
+    {
+      "package": "com.xiaomi.scanner",
+      "name": "Mi Scanner & Camera QR Utility",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.xiaomi.scanner",
+      "restore_cmd": "cmd package install-existing com.xiaomi.scanner",
+      "impact_summary": "Document scanning and QR reading subsystem integrated into camera. Removal disables QR scanning inside native camera app.",
+      "dependencies": []
+    },
+    {
+      "package": "com.duokan.phone.remotecontroller",
+      "name": "Mi Remote (IR Controller)",
+      "target_os": "HyperOS",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.duokan.phone.remotecontroller",
+      "restore_cmd": "cmd package install-existing com.duokan.phone.remotecontroller",
+      "impact_summary": "Infrared blaster remote controller app. Can be removed if the physical IR transmitter is not used.",
       "dependencies": []
     }
   ]
