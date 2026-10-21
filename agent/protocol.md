@@ -17,6 +17,7 @@ Agents interacting with attached physical devices or emulators must abide by fiv
 3. **Fail-Closed Safety Guard:** Any package marked `CRITICAL` or `BLOCKED` in `data/packages.json` must immediately abort execution with exit code `101`.
 4. **Heartbeat State Verification:** The agent must ping `adb get-state` after every single package removal to detect system server reboots or USB drops.
 5. **Privacy Containment:** Logs and telemetry records generated during execution must strip all hardware identifiers (Serial Numbers, IMEI, MAC addresses, Wi-Fi SSIDs).
+6. **Open-Core Modularity:** The agent framework operates strictly as a headless, deterministic CLI execution engine, decoupling open-source primitives from external consumer SaaS platforms.
 
 ---
 
