@@ -7,6 +7,8 @@
   <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" />
 </p>
 
+> **Keywords & Topics:** `android-debloat` · `hyperos` · `miui` · `xiaomi` · `samsung-one-ui` · `adb` · `bloatware-remover` · `battery-drain-fix` · `zero-root` · `play-integrity` · `privacy-hardening` · `telemetry-removal` · `android-optimization` · `ai-agent`
+
 ---
 
 ## Overview
@@ -123,6 +125,8 @@ HyperDebloat-Agent/
 ---
 
 ## Package Safety Classification
+
+<!-- Registry covers 109 packages across Xiaomi HyperOS, Samsung One UI, and Universal Android. -->
 
 All target packages in [`data/packages.json`](data/packages.json) are classified into three strict tiers:
 
@@ -270,6 +274,38 @@ HyperDebloat-Agent is an open-source, community-driven framework.
 - **No telemetry is collected by this project.**
 - **No private user or device identifiers are stored.**
 - All scripts run locally on your machine via direct ADB communication with your device.
+
+---
+
+## Frequently Asked Questions
+
+### Is it safe to remove com.miui.analytics?
+
+Yes — it's classified **SAFE**. It's Xiaomi's telemetry daemon. Removal stops background user-activity reporting to Xiaomi servers. Fully reversible via `adb shell cmd package install-existing com.miui.analytics`.
+
+### Is it safe to remove com.miui.msa.global?
+
+Yes — **SAFE** tier. It's the MIUI System Ads engine. Removal stops banner/push ads in system apps. **Important:** Run the 3-step purge sequence first to avoid the 500mA CPU loop (see [Empirical Findings](#key-empirical-findings--engineering-breakthroughs)).
+
+### Should I remove com.xiaomi.joyose?
+
+**NO** — it is **CRITICAL** and **BLOCKED**. Despite community lists recommending removal, empirical testing proves Joyose manages CPU thermal limits AND bridges SMS OTP for banking apps. This framework hard-blocks removal and will refuse to execute the command.
+
+### Does this break Google Pay or banking apps?
+
+No. Uses `pm uninstall -k --user 0`. System partitions are untouched. `dm-verity` remains intact. Play Integrity passes `MEETS_DEVICE_INTEGRITY`. All banking apps, Google Pay, and biometric authentication remain fully operational.
+
+### Does this work on Samsung One UI?
+
+Yes — Samsung One UI support (Galaxy S, A, M series) is included with `com.samsung.android.bixby.agent` (Bixby), Samsung Analytics, Samsung Free, and related packages safely removable via the same ADB framework.
+
+### Does this require root?
+
+No root required. No bootloader unlock needed. Works on stock, unmodified devices via ADB over USB. Play Integrity and SafetyNet remain fully intact throughout.
+
+### What is the 500mA MSA analytics battery drain bug?
+
+In HyperOS/MIUI, silent APK updates in `/data/app` cause `system_server` to enter a binder loop spawning zombie Chrome sandboxes when MSA (`com.miui.msa.global`) and Analytics (`com.miui.analytics`) are frozen without first purging these updates. This drains **500mA continuously** even with the screen off (7%–10% CPU load). The framework's 3-step purge sequence eliminates this entirely.
 
 ---
 

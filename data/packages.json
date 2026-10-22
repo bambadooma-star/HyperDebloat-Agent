@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "1.0.0",
-  "last_updated": "2026-10-21",
+  "last_updated": "2026-10-22",
   "metadata": {
     "framework": "HyperDebloat-Agent",
-    "description": "Deterministic ADB debloating and telemetry registry for Xiaomi HyperOS, MIUI, and standard Android core systems (Non-Root).",
+    "description": "Deterministic ADB debloating and telemetry registry for Xiaomi HyperOS, MIUI, Samsung One UI, and standard Android core systems (Non-Root).",
     "maintainer": "HyperDebloat Core Architecture Team",
     "license": "MIT"
   },
@@ -629,6 +629,599 @@
       "uninstall_cmd": "pm uninstall -k --user 0 com.duokan.phone.remotecontroller",
       "restore_cmd": "cmd package install-existing com.duokan.phone.remotecontroller",
       "impact_summary": "Infrared blaster remote controller app. Can be removed if the physical IR transmitter is not used.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.visionintelligence",
+      "name": "Bixby Vision",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.visionintelligence",
+      "restore_cmd": "cmd package install-existing com.samsung.android.visionintelligence",
+      "impact_summary": "Removes Bixby Vision image-recognition feature. No impact on core OS functionality. Camera app loses the Bixby lens shortcut but continues to work normally.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.bixby.agent",
+      "name": "Bixby Voice",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.bixby.agent",
+      "restore_cmd": "cmd package install-existing com.samsung.android.bixby.agent",
+      "impact_summary": "Disables Bixby voice assistant entirely. Side button can be remapped. No system instability. Some Bixby Routines voice triggers will stop working.",
+      "dependencies": [
+        "com.samsung.android.visionintelligence"
+      ]
+    },
+    {
+      "package": "com.samsung.android.bixby.service",
+      "name": "Bixby Dictation",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.bixby.service",
+      "restore_cmd": "cmd package install-existing com.samsung.android.bixby.service",
+      "impact_summary": "Removes Bixby dictation/speech-to-text backend. Samsung Keyboard voice input falls back to Google speech services. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.routines",
+      "name": "Bixby Routines",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.routines",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.routines",
+      "impact_summary": "Removes Bixby Routines automation engine. All user-configured routines (e.g., auto-Wi-Fi, bedtime mode triggers) will stop running. Tasker or MacroDroid can replace this. Modes and Routines settings panel will be empty.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.spage",
+      "name": "Samsung Free (Bixby Home)",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.spage",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.spage",
+      "impact_summary": "Removes Samsung Free news/entertainment feed from the leftmost home screen panel. Eliminates ads and background data usage. No system impact whatsoever.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.game.gamehome",
+      "name": "Game Launcher",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.game.gamehome",
+      "restore_cmd": "cmd package install-existing com.samsung.android.game.gamehome",
+      "impact_summary": "Removes Samsung Game Launcher hub. Games still launch normally from app drawer. Game-specific performance profiles via Game Booster may become unavailable.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.game.gametools",
+      "name": "Game Booster / Game Tools",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.game.gametools",
+      "restore_cmd": "cmd package install-existing com.samsung.android.game.gametools",
+      "impact_summary": "Removes in-game overlay (screenshot, recording, do-not-disturb, performance monitor). Games continue to run without issue. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.arzone",
+      "name": "AR Zone",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.arzone",
+      "restore_cmd": "cmd package install-existing com.samsung.android.arzone",
+      "impact_summary": "Removes AR Zone hub including AR Doodle and AR effects. Camera app loses AR mode shortcuts but all other camera functions remain intact.",
+      "dependencies": [
+        "com.samsung.android.aremoji"
+      ]
+    },
+    {
+      "package": "com.samsung.android.aremoji",
+      "name": "AR Emoji",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.aremoji",
+      "restore_cmd": "cmd package install-existing com.samsung.android.aremoji",
+      "impact_summary": "Removes AR Emoji avatar creation and sticker generation. Samsung Keyboard loses AR Emoji sticker tab. No impact on camera or messaging.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.tips",
+      "name": "Samsung Tips",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "adware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.tips",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.tips",
+      "impact_summary": "Removes Samsung Tips app that shows promotional content and device tutorials. Eliminates tip notifications. Zero system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.mobileservice",
+      "name": "Samsung Experience Service",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.mobileservice",
+      "restore_cmd": "cmd package install-existing com.samsung.android.mobileservice",
+      "impact_summary": "Removes Samsung Experience Service telemetry framework. Stops Samsung from collecting usage analytics. Samsung Account sign-in may show occasional errors but remains functional.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.da.daagent",
+      "name": "Samsung Analytics (Dual DA Agent)",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.da.daagent",
+      "restore_cmd": "cmd package install-existing com.samsung.android.da.daagent",
+      "impact_summary": "Disables Samsung diagnostic analytics data collection agent. Stops background telemetry uploads. No user-facing features are affected.",
+      "dependencies": []
+    },
+    {
+      "package": "com.sec.spp.push",
+      "name": "Samsung Push Service",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.sec.spp.push",
+      "restore_cmd": "cmd package install-existing com.sec.spp.push",
+      "impact_summary": "Removes Samsung's proprietary push notification service. Samsung apps (Galaxy Store, Samsung Pay, Samsung Members) will no longer receive push notifications. Does not affect Google FCM-based notifications from third-party apps.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.scloud",
+      "name": "Samsung Cloud",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.scloud",
+      "restore_cmd": "cmd package install-existing com.samsung.android.scloud",
+      "impact_summary": "Disables Samsung Cloud backup and sync. Gallery cloud sync, Samsung Notes sync, and Settings backup to Samsung Cloud will stop. Existing cloud data is not deleted. Google Drive backup remains unaffected.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.authfw",
+      "name": "Samsung Pass (Auth Framework)",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.authfw",
+      "restore_cmd": "cmd package install-existing com.samsung.android.authfw",
+      "impact_summary": "Removes Samsung Pass biometric autofill and password manager. Saved passwords in Samsung Pass become inaccessible. Samsung Internet browser autofill via Samsung Pass will stop. Biometric unlock for the device itself is NOT affected.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.samsungpass",
+      "name": "Samsung Pass",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "cloud_sync",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.samsungpass",
+      "restore_cmd": "cmd package install-existing com.samsung.android.samsungpass",
+      "impact_summary": "Removes the Samsung Pass UI and credential management. Web autofill via Samsung Pass is lost. Users relying on Samsung Pass for password storage should migrate to an alternative manager first.",
+      "dependencies": [
+        "com.samsung.android.authfw"
+      ]
+    },
+    {
+      "package": "com.sec.android.app.sbrowser",
+      "name": "Samsung Internet Browser",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.sec.android.app.sbrowser",
+      "restore_cmd": "cmd package install-existing com.sec.android.app.sbrowser",
+      "impact_summary": "Removes Samsung Internet browser. Default browser intent falls back to Chrome or another installed browser. Bookmarks and saved data in Samsung Internet are lost from the device. Some Samsung deep links may fail to open until another default browser is set.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.email.provider",
+      "name": "Samsung Email",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.email.provider",
+      "restore_cmd": "cmd package install-existing com.samsung.android.email.provider",
+      "impact_summary": "Removes Samsung Email client. Users must use Gmail or another email app. Configured email accounts in Samsung Email will need to be re-added elsewhere.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.calendar",
+      "name": "Samsung Calendar",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.calendar",
+      "restore_cmd": "cmd package install-existing com.samsung.android.calendar",
+      "impact_summary": "Removes Samsung Calendar app. Google Calendar or another calendar app should be installed as replacement. Calendar data synced via Google Account remains safe. Samsung-specific calendar widgets will disappear.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.galaxyfinder",
+      "name": "Samsung Finder",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.galaxyfinder",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.galaxyfinder",
+      "impact_summary": "Removes Samsung Finder universal search from home screen. Swipe-down search on the home screen will stop working. App drawer search is a separate function and remains available.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.watchmanagerstub",
+      "name": "Galaxy Wearable (Stub)",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.watchmanagerstub",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.watchmanagerstub",
+      "impact_summary": "Removes the Galaxy Wearable stub installer. This only prompts users to download the full Galaxy Wearable app. If you own a Galaxy Watch, install the full app from the Play Store instead. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.themestore",
+      "name": "Galaxy Themes",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.themestore",
+      "restore_cmd": "cmd package install-existing com.samsung.android.themestore",
+      "impact_summary": "Removes Samsung Galaxy Themes store. Wallpaper and theme downloads via Samsung are disabled. Currently applied theme remains intact. Third-party launchers and wallpaper apps are unaffected.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.dressroom",
+      "name": "Samsung Wallpaper Services",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.dressroom",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.dressroom",
+      "impact_summary": "Removes Samsung's Wallpaper services including dynamic/video wallpapers from Samsung. Static wallpapers and Google wallpaper picker remain functional.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.rubin.app",
+      "name": "Samsung Customization Service",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.rubin.app",
+      "restore_cmd": "cmd package install-existing com.samsung.android.rubin.app",
+      "impact_summary": "Removes Samsung's personalization and content recommendation engine. Stops collection of usage patterns for ad targeting and content suggestions in Samsung apps. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.camera.sticker.facearavatar.preload",
+      "name": "AR Emoji Stickers (Preload)",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.camera.sticker.facearavatar.preload",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.camera.sticker.facearavatar.preload",
+      "impact_summary": "Removes preloaded AR Emoji sticker assets. Frees storage space. No impact on camera or messaging functionality.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.ardrawing",
+      "name": "AR Doodle",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.ardrawing",
+      "restore_cmd": "cmd package install-existing com.samsung.android.ardrawing",
+      "impact_summary": "Removes AR Doodle augmented reality drawing feature from the camera. Camera app continues to function normally in all other modes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.contacts",
+      "name": "Samsung Contacts",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Core contacts provider deeply integrated with Samsung Dialer and Messages. Removal breaks call log display, contact lookup, and can cause SystemUI crashes. Essential for telephony stack.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.incallui",
+      "name": "Samsung In-Call UI",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Provides the in-call screen (answer, reject, hold, merge). Removal makes it impossible to interact with active phone calls and can cause telephony service crashes.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.dialer",
+      "name": "Samsung Phone / Dialer",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Core phone dialer application. Removal completely disables the ability to make or receive phone calls and breaks emergency dialing. Causes telephony framework errors.",
+      "dependencies": [
+        "com.samsung.android.incallui"
+      ]
+    },
+    {
+      "package": "com.samsung.android.messaging",
+      "name": "Samsung Messages",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Default SMS/MMS/RCS handler. Removal breaks SMS delivery on devices without Google Messages pre-installed. May cause MMS APN configuration loss and notification framework errors.",
+      "dependencies": []
+    },
+    {
+      "package": "com.sec.android.app.launcher",
+      "name": "One UI Home (Launcher)",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Default Samsung home screen launcher. Removal without an alternative launcher pre-configured causes a bootloop to the home screen selection prompt or a soft-brick state. Essential for device usability.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.systemui",
+      "name": "Samsung SystemUI",
+      "target_os": "One UI",
+      "tier": "CRITICAL",
+      "category": "core_framework",
+      "uninstall_cmd": "BLOCKED",
+      "restore_cmd": "N/A",
+      "impact_summary": "Core system UI framework providing status bar, notification shade, quick settings, lock screen, and navigation bar. Removal causes immediate and continuous system crashes rendering the device unusable.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.forest",
+      "name": "Samsung Digital Wellbeing",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.forest",
+      "restore_cmd": "cmd package install-existing com.samsung.android.forest",
+      "impact_summary": "Removes Samsung's Digital Wellbeing integration layer. Screen time tracking, app timers, and Focus Mode may stop working. Google's Digital Wellbeing (if present) can serve as replacement.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.sharelive",
+      "name": "Samsung Quick Share / Live Sharing",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.sharelive",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.sharelive",
+      "impact_summary": "Removes Samsung's live screen sharing feature used during calls. Quick Share file transfer is a separate package and remains functional. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.spay",
+      "name": "Samsung Pay",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.spay",
+      "restore_cmd": "cmd package install-existing com.samsung.android.spay",
+      "impact_summary": "Removes Samsung Pay mobile payment platform. MST and NFC payments via Samsung Pay will stop. Google Pay/Wallet remains fully functional as alternative. Swipe-up gesture from home screen is freed.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.spayfw",
+      "name": "Samsung Pay Framework",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "core_framework",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.spayfw",
+      "restore_cmd": "cmd package install-existing com.samsung.android.spayfw",
+      "impact_summary": "Removes Samsung Pay backend framework. Required by Samsung Pay — removing this without removing Samsung Pay first may cause crashes. NFC hardware itself remains functional for Google Pay.",
+      "dependencies": [
+        "com.samsung.android.spay"
+      ]
+    },
+    {
+      "package": "com.samsung.android.mdx",
+      "name": "Samsung DeX System",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.mdx",
+      "restore_cmd": "cmd package install-existing com.samsung.android.mdx",
+      "impact_summary": "Removes Samsung DeX desktop experience. USB-C/wireless display output for desktop mode will no longer function. Standard screen mirroring via Smart View remains available.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.svoiceime",
+      "name": "Samsung Voice Input",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.svoiceime",
+      "restore_cmd": "cmd package install-existing com.samsung.android.svoiceime",
+      "impact_summary": "Removes Samsung's proprietary voice input engine. Google Voice Typing remains available as the keyboard voice input method. No system impact.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.oneconnect",
+      "name": "Samsung SmartThings (Stub)",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.oneconnect",
+      "restore_cmd": "cmd package install-existing com.samsung.android.oneconnect",
+      "impact_summary": "Removes SmartThings preloaded stub/framework. If you use SmartThings IoT devices, reinstall from Play Store. Device-to-device features (Smart View casting) have separate packages and are unaffected.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.voc",
+      "name": "Samsung Members",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.voc",
+      "restore_cmd": "cmd package install-existing com.samsung.android.voc",
+      "impact_summary": "Removes Samsung Members community and support app. Diagnostic reports, community forums, and Samsung support chat become inaccessible. No system impact. Can be reinstalled from Galaxy Store.",
+      "dependencies": []
+    },
+    {
+      "package": "com.sec.android.daemonapp",
+      "name": "Samsung Weather",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.sec.android.daemonapp",
+      "restore_cmd": "cmd package install-existing com.sec.android.daemonapp",
+      "impact_summary": "Removes Samsung Weather app and its home screen / lock screen widgets. Always-On Display weather info may disappear. Clock app weather integration may break. Install a third-party weather app as replacement.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.app.smartcapture",
+      "name": "Samsung Screen Capture / Smart Capture",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.app.smartcapture",
+      "restore_cmd": "cmd package install-existing com.samsung.android.app.smartcapture",
+      "impact_summary": "Removes Samsung's enhanced screenshot toolbar (scroll capture, crop, draw, share). Basic screenshot via button combo still works but the post-capture editing toolbar is lost.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.kidsinstaller",
+      "name": "Samsung Kids Installer",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.kidsinstaller",
+      "restore_cmd": "cmd package install-existing com.samsung.android.kidsinstaller",
+      "impact_summary": "Removes Samsung Kids stub installer from Quick Settings panel. This only downloads the full Samsung Kids app when tapped. No impact on parental controls provided by Google Family Link.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.android.wellbeing",
+      "name": "Samsung Device Care Well-being",
+      "target_os": "One UI",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.android.wellbeing",
+      "restore_cmd": "cmd package install-existing com.samsung.android.wellbeing",
+      "impact_summary": "Removes the well-being component from Samsung Device Care. Screen time features and wind-down mode are disabled. Battery and storage optimization in Device Care remain functional.",
+      "dependencies": []
+    },
+    {
+      "package": "com.samsung.storyservice",
+      "name": "Samsung Story Service",
+      "target_os": "One UI",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.samsung.storyservice",
+      "restore_cmd": "cmd package install-existing com.samsung.storyservice",
+      "impact_summary": "Removes background service that auto-generates highlight reels and stories in Samsung Gallery. Gallery app continues to function normally for viewing and editing photos.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.tips",
+      "name": "Pixel Tips",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.tips",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.tips",
+      "impact_summary": "Removes the Pixel Tips setup tips app. No system impact; the app only shows feature highlights and promotional device tutorials after setup.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.setupwizard",
+      "name": "Google Setup Wizard",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.setupwizard",
+      "restore_cmd": "cmd package install-existing com.google.android.setupwizard",
+      "impact_summary": "Removing this breaks the factory reset flow — the device will boot into a broken setup state after a factory reset. Only remove if you are absolutely certain you will never factory reset the device.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.wellbeing",
+      "name": "Google Digital Wellbeing",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "telemetry",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.wellbeing",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.wellbeing",
+      "impact_summary": "Generates hundreds of daily URGENT_ALARM wakeups to monitor app usage in the background. Removing stops all background usage tracking and reduces wakelock events, but the Digital Wellbeing entry disappears from Settings.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.books",
+      "name": "Google Play Books",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.books",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.books",
+      "impact_summary": "Unused e-reader app preloaded on most Android devices. Safe to remove; no system dependencies. Reinstall from Play Store if needed.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.magazines",
+      "name": "Google Play Newsstand",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.magazines",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.magazines",
+      "impact_summary": "Google news aggregator rarely used by most users. Safe to remove with no system impact or dependency conflicts.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.projection.gearhead",
+      "name": "Android Auto Stub",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.projection.gearhead",
+      "restore_cmd": "cmd package install-existing com.google.android.projection.gearhead",
+      "impact_summary": "Android Auto stub/framework. Safe to remove only if Android Auto is never used. Removing breaks wireless and wired Android Auto projection to car head units.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.partnersetup",
+      "name": "Google Partner Setup",
+      "target_os": "Universal",
+      "tier": "SAFE",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.partnersetup",
+      "restore_cmd": "cmd package install-existing com.google.android.partnersetup",
+      "impact_summary": "OEM/carrier partner setup telemetry agent. Transmits device provisioning data to carrier and OEM partners during initial setup. No user-facing functionality; safe to remove post-setup.",
+      "dependencies": []
+    },
+    {
+      "package": "com.google.android.apps.nbu.files",
+      "name": "Google Files",
+      "target_os": "Universal",
+      "tier": "CAUTION",
+      "category": "bloatware",
+      "uninstall_cmd": "pm uninstall -k --user 0 com.google.android.apps.nbu.files",
+      "restore_cmd": "cmd package install-existing com.google.android.apps.nbu.files",
+      "impact_summary": "Duplicate file manager. Safe to remove only if another file manager is installed. Removing without an alternative leaves the device without a built-in file browser for local storage management.",
       "dependencies": []
     }
   ]

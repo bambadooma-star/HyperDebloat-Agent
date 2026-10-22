@@ -3,6 +3,8 @@
 > **Deterministic ADB Debloating, Privacy Hardening & Telemetry-Stripping Framework for Android & Xiaomi HyperOS / MIUI.**  
 > *Zero-Root. 100% Reversible. Play Integrity & Banking Safe. Built for Power Users & Autonomous AI Agents.*
 
+> **Search Tags:** android debloat hyperos · remove miui bloatware · xiaomi battery drain fix · samsung one ui debloat · pm uninstall user 0 safe list · non-root android optimization · adb debloat framework
+
 ---
 
 ## Navigation / ניווט מהיר
@@ -67,7 +69,7 @@ To capture both ends of the ecosystem, HyperDebloat is architected on a battle-t
 
 Modern flagship and mid-range Android smartphones—especially those running Xiaomi HyperOS and MIUI—ship with dozens of background analytics daemons, proprietary ad dispatchers, lockscreen content pushers, and aggressive telemetry pipelines. These processes constantly consume CPU cycles, generate thermal pressure, throttle benchmark performance, and drain battery life.
 
-**HyperDebloat-Agent** is an open-source, deterministic framework engineered to safely dismantle pre-installed bloatware, disable embedded telemetry, and harden network privacy across HyperOS, MIUI, and AOSP-based devices—**without unlocking the bootloader, without tripping Knox or dm-verity, and without root privileges.**
+**HyperDebloat-Agent** is an open-source, deterministic framework engineered to safely dismantle pre-installed bloatware, disable embedded telemetry, and harden network privacy across HyperOS, MIUI, Samsung One UI, and AOSP-based devices—**without unlocking the bootloader, without tripping Knox or dm-verity, and without root privileges.** Samsung One UI users can remove packages like `com.samsung.android.bixby.agent` (Bixby), Samsung Analytics, and Samsung Free using the same `pm uninstall -k --user 0` ADB mechanism with full reversibility.
 
 ---
 
