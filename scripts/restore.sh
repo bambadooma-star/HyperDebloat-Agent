@@ -18,8 +18,8 @@ BOLD='\033[1m'
 NC='\033[0m' # No Color
 
 # Determine script directories
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && (pwd -W 2>/dev/null || pwd))"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && (pwd -W 2>/dev/null || pwd))"
 DATA_FILE="${ROOT_DIR}/data/packages.json"
 LOGS_DIR="${ROOT_DIR}/logs"
 LAST_REMOVED_FILE="${LOGS_DIR}/last_removed.txt"
