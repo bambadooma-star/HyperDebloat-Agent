@@ -176,13 +176,25 @@ SUCCESS_COUNT=0
 FAILED_COUNT=0
 ALREADY_INSTALLED_COUNT=0
 
-# Fetch currently active packages on user 0
+# Fetch currently active packages on user 0 (both installed and enabled)
 CURRENTLY_ACTIVE="$(adb shell pm list packages | sed 's/^package://' | tr -d '\r')"
+DISABLED_PACKAGES="$(adb shell pm list packages -d | sed 's/^package://' | tr -d '\r')"
 
 for pkg in "${TARGETS_TO_RESTORE[@]}"; do
-    # Check if already present on user 0
+    # Check if disabled, re-enable it
+    if echo "${DISABLED_PACKAGES}" | grep -qx "${pkg}"; then
+        echo -e "--> Re-enabling disabled package: ${BOLD}${pkg}${NC}"
+        ENABLE_OUT="$(adb shell pm enable "${pkg}" 2>&1 | tr -d '\r')"
+        if echo "${ENABLE_OUT}" | grep -qi "new state"; then
+            log_ok "Successfully re-enabled: ${pkg}"
+            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+            continue
+        fi
+    fi
+
+    # Check if already present on user 0 and not disabled
     if echo "${CURRENTLY_ACTIVE}" | grep -qx "${pkg}"; then
-        log_info "${pkg} is already installed for user 0. Skipping."
+        log_info "${pkg} is already installed and enabled for user 0. Skipping."
         ALREADY_INSTALLED_COUNT=$((ALREADY_INSTALLED_COUNT + 1))
         continue
     fi

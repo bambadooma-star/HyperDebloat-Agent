@@ -260,7 +260,7 @@ SUCCESS_COUNT=0
 SKIPPED_COUNT=0
 FAILED_COUNT=0
 
-while IFS='|' read -r pkg tier name cmd impact; do
+while IFS='|' read -r pkg tier name cmd impact <&3; do
     [ -z "${pkg}" ] && continue
 
     # STRICT SAFETY CHECK: Refuse CRITICAL or BLOCKED packages
@@ -288,14 +288,26 @@ while IFS='|' read -r pkg tier name cmd impact; do
         adb shell am force-stop com.miui.notes >/dev/null 2>&1 || true
     fi
 
-    # Issue ADB command
-    UNINSTALL_OUTPUT="$(adb shell pm uninstall -k --user 0 "${pkg}" 2>&1 | tr -d '\r')"
+    # Issue ADB command (temporarily allow non-zero exit from adb without terminating script)
+    UNINSTALL_OUTPUT="$(adb shell pm uninstall -k --user 0 "${pkg}" 2>&1 || true)"
+    UNINSTALL_OUTPUT="$(echo "${UNINSTALL_OUTPUT}" | tr -d '\r')"
     
-    # Check for success
+    # Check for success, or fallback to pm disable-user if system blocks uninstallation (Failure [-1000])
     if echo "${UNINSTALL_OUTPUT}" | grep -qi "Success"; then
         log_ok "Successfully uninstalled: ${pkg}"
         echo "${pkg}" >> "${LAST_REMOVED_FILE}"
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+    elif echo "${UNINSTALL_OUTPUT}" | grep -qi "Failure \[-1000\]"; then
+        log_warn "System blocked uninstall (Failure [-1000]). Applying non-root fallback: pm disable-user..."
+        DISABLE_OUTPUT="$(adb shell pm disable-user --user 0 "${pkg}" 2>&1 | tr -d '\r')"
+        if echo "${DISABLE_OUTPUT}" | grep -qi "new state: disabled"; then
+            log_ok "Successfully neutralized & disabled: ${pkg}"
+            echo "${pkg}" >> "${LAST_REMOVED_FILE}"
+            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+        else
+            log_err "Fallback disable failed for ${pkg}. Output: ${DISABLE_OUTPUT}"
+            FAILED_COUNT=$((FAILED_COUNT + 1))
+        fi
     else
         log_err "Failed to uninstall ${pkg}. Output: ${UNINSTALL_OUTPUT}"
         FAILED_COUNT=$((FAILED_COUNT + 1))
@@ -316,7 +328,7 @@ while IFS='|' read -r pkg tier name cmd impact; do
         exit 10
     fi
 
-done <<< "$(echo -e "${ACTIVE_TARGETS}" | grep -v '^[[:space:]]*$')"
+done 3<<< "$(echo -e "${ACTIVE_TARGETS}" | grep -v '^[[:space:]]*$')"
 
 # ------------------------------------------------------------------------------
 # 6. Summary Report
