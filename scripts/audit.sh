@@ -116,7 +116,7 @@ PROP_HYPEROS_FLAG="$(get_device_prop "ro.mi.os.version.name")"
 PROP_MIUI_INCR="$(get_device_prop "ro.build.version.incremental")"
 
 # Battery Level Verification
-BATTERY_LEVEL="$(adb shell dumpsys battery 2>/dev/null | grep -i "level:" | awk '{print $2}' | tr -d '\r' || echo "0")"
+BATTERY_LEVEL="$(adb shell dumpsys battery 2>/dev/null | grep -E "^[[:space:]]*level:" | head -n 1 | awk '{print $2}' | tr -d '\r' || echo "0")"
 
 echo -e "  - Manufacturer : ${BOLD}${PROP_MANUFACTURER}${NC} (${PROP_BRAND})"
 echo -e "  - Model        : ${BOLD}${PROP_MODEL}${NC} (${PROP_DEVICE})"
